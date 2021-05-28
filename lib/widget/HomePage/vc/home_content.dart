@@ -1,13 +1,11 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_lvyindemo/vendor/BaseView/BCBaseAppBar.dart';
 import 'package:flutter_lvyindemo/vendor/WebHTTP/http_config.dart';
 import 'package:flutter_lvyindemo/vendor/WebHTTP/http_request.dart';
+import 'package:flutter_lvyindemo/widget/HomePage/model/hd_homehb_model.dart';
 import 'package:flutter_lvyindemo/widget/HomePage/model/hd_homenews_model.dart';
 
 import 'package:flutter_lvyindemo/widget/HomePage/model/hdbrowsepicmodel.dart';
-import 'package:flutter_lvyindemo/widget/HomePage/view/IconTextButton.dart';
 
 import 'package:flutter_swiper/flutter_swiper.dart';
 
@@ -21,13 +19,17 @@ class HomePage extends StatefulWidget {
 class _HomePage extends State<HomePage> {
   List<HDbrowsepicmodel> arrOfbanner = [];
   List<HDhomenewmodel> arrOfNews = [];
-  List arrOfHB = [];
+  List<HDhomehbmodel> arrOfHB = [];
+  List<HDhomehbmodel> arrOfPublicity = [];
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getBannerData();
     getNewsData();
+    getHBData();
+    getPublicityData();
   }
 
   @override
@@ -47,6 +49,10 @@ class _HomePage extends State<HomePage> {
             height: 10,
           ),
           buildHuanbaoTabel(),
+          SizedBox(
+            height: 10,
+          ),
+          buildPublicityTabel(),
         ],
       ),
     );
@@ -126,7 +132,7 @@ class _HomePage extends State<HomePage> {
                                             style: TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold,
-                                              color: Colors.black,
+                                              color: Color(0xff333336),
                                             ),
                                           ),
                                           SizedBox(
@@ -138,7 +144,7 @@ class _HomePage extends State<HomePage> {
                                               e.info,
                                               maxLines: 2,
                                               style: TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 12,
                                                 color: Color(0xff666669),
                                               ),
                                             ),
@@ -194,18 +200,90 @@ class _HomePage extends State<HomePage> {
               print('环保验收公示更多点击');
             }, "环保验收公示"),
             Container(
-            padding: EdgeInsets.fromLTRB(16, 0, 16, 8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: arrOfHB.map((e) => 
-                Container(
-                  
-                )).toList(),
+              padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: arrOfHB.map((e) => buildhbinfocell(e)).toList(),
+              ),
             ),
-            ),
-
           ],
         ));
+  }
+
+  //信息公示
+  Widget buildPublicityTabel() {
+    return Container(
+        color: Colors.white,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            buildSectionTitleRow(() {
+              print('信息公示更多点击');
+            }, "信息公示"),
+            Container(
+              padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children:
+                    arrOfPublicity.map((e) => buildhbinfocell(e)).toList(),
+              ),
+            ),
+          ],
+        ));
+  }
+
+  //环保+信息的cell
+  Container buildhbinfocell(HDhomehbmodel e) {
+    return Container(
+      height: 80,
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4),
+            color: Color(0xfff5f5f6),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(11, 0, 11, 0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                  children: [
+                    Image(image: AssetImage('images/home/xiangmu.png')),
+                    SizedBox(
+                      width: 6,
+                    ),
+                    Text(
+                      e.title,
+                      maxLines: 1,
+                      style: TextStyle(color: Color(0xff333336), fontSize: 14),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                Row(
+                  children: [
+                    Image(image: AssetImage('images/home/shijian.png')),
+                    SizedBox(
+                      width: 6,
+                    ),
+                    Text(
+                      e.turn_time,
+                      maxLines: 1,
+                      style: TextStyle(color: Color(0xff333336), fontSize: 14),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   //创建sectionTitle
@@ -275,6 +353,34 @@ class _HomePage extends State<HomePage> {
         .then((res) {
       List datalist = res['data']['data'];
       arrOfNews = datalist.map((e) => HDhomenewmodel.fromJson(e)).toList();
+      this.mounted ? setState(() {}) : null;
+    }).catchError((error) {});
+  }
+
+  //请求环保公示数据
+  void getHBData() async {
+    var url = '${HTTPConfig.baseURL}/getPublicityListHome';
+    BCHttpRequest.request(url,
+            params: {'limit': '5', 'page': '1', 'type': '2'},
+            method: 'get',
+            isShowHub: true)
+        .then((res) {
+      List datalist = res['data']['data'];
+      arrOfHB = datalist.map((e) => HDhomehbmodel.fromJson(e)).toList();
+      this.mounted ? setState(() {}) : null;
+    }).catchError((error) {});
+  }
+
+  //请求信息公示数据
+  void getPublicityData() async {
+    var url = '${HTTPConfig.baseURL}/getPublicityListHome';
+    BCHttpRequest.request(url,
+            params: {'limit': '5', 'page': '1', 'type': '1'},
+            method: 'get',
+            isShowHub: true)
+        .then((res) {
+      List datalist = res['data']['data'];
+      arrOfPublicity = datalist.map((e) => HDhomehbmodel.fromJson(e)).toList();
       this.mounted ? setState(() {}) : null;
     }).catchError((error) {});
   }
