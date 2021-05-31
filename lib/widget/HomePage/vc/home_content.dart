@@ -4,6 +4,7 @@ import 'package:flutter_lvyindemo/vendor/WebHTTP/http_config.dart';
 import 'package:flutter_lvyindemo/vendor/WebHTTP/http_request.dart';
 import 'package:flutter_lvyindemo/widget/HomePage/model/hd_homehb_model.dart';
 import 'package:flutter_lvyindemo/widget/HomePage/model/hd_homenews_model.dart';
+import 'package:flutter_lvyindemo/widget/HomePage/model/hd_homepolicie_model.dart';
 
 import 'package:flutter_lvyindemo/widget/HomePage/model/hdbrowsepicmodel.dart';
 
@@ -21,6 +22,7 @@ class _HomePage extends State<HomePage> {
   List<HDhomenewmodel> arrOfNews = [];
   List<HDhomehbmodel> arrOfHB = [];
   List<HDhomehbmodel> arrOfPublicity = [];
+  List<BChomepoliciemodel> arrOfPolicie = [];
 
   @override
   void initState() {
@@ -30,6 +32,14 @@ class _HomePage extends State<HomePage> {
     getNewsData();
     getHBData();
     getPublicityData();
+    getPolicieData();
+
+    _policcontentcontroller.addListener(() {
+      //更新状态
+      setState(() {
+        _incrementCounter(_policcontentcontroller.offset);
+      });
+    });
   }
 
   @override
@@ -53,6 +63,10 @@ class _HomePage extends State<HomePage> {
             height: 10,
           ),
           buildPublicityTabel(),
+          SizedBox(
+            height: 10,
+          ),
+          buildPoliciesTabel(),
         ],
       ),
     );
@@ -286,6 +300,200 @@ class _HomePage extends State<HomePage> {
     );
   }
 
+  //信息公示
+  Widget buildPoliciesTabel() {
+    return Container(
+        color: Colors.white,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            buildSectionTitleRow(() {
+              print('资料中心更多点击');
+            }, "资料中心"),
+            buildhbpoliciescell(),
+          ],
+        ));
+  }
+
+  ScrollController _policcontentcontroller = ScrollController();
+  ScrollController _policiestagcontroller =
+      ScrollController(initialScrollOffset: 40);
+  //政策法规cell（资料中心）
+  Column buildhbpoliciescell() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Container(
+          height: 208,
+          child: ListView.builder(
+            controller: _policcontentcontroller,
+            padding: const EdgeInsets.only(left: 10, right: 10),
+            scrollDirection: Axis.horizontal,
+            itemCount: arrOfPolicie.length,
+            itemExtent: 166,
+            itemBuilder: (BuildContext context, int section) {
+              List picarr = [
+                'images/home/zhengce_fagui.png',
+                'images/home/zhengce_falv.png',
+                'images/home/zhengce_fagui.png',
+                'images/home/zhengce_fagui.png',
+                'images/home/zhengce_fagui.png',
+              ];
+
+              return Padding(
+                padding: const EdgeInsets.only(left: 6, right: 6),
+                child: Container(
+                  width: 166,
+                  height: 208,
+                  decoration: BoxDecoration(
+                    color: Color(0xfff5f5f6),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  //每个item的内容
+                  child: Column(
+                    children: [
+                      //头
+                      Container(
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.fromLTRB(14, 16, 6, 10),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex: 24,
+                              child: Image(
+                                image: AssetImage(
+                                  picarr[section],
+                                ),
+                                width: 24,
+                                height: 24,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 2,
+                            ),
+                            Expanded(
+                              flex: 75,
+                              child: Text(
+                                arrOfPolicie[section].cate_name,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 50,
+                              child: GestureDetector(
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      '更多',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Color(0xff666669),
+                                      ),
+                                    ),
+                                    Image(
+                                      image: AssetImage(
+                                        'images/home/icon_jiantou.png',
+                                      ),
+                                      width: 16,
+                                      height: 16,
+                                    )
+                                  ],
+                                ),
+                                onTap: () {
+                                  print('点击了更多$section');
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      //内容
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: arrOfPolicie[section]
+                            .data
+                            .sublist(0, 4)
+                            .map((e) => GestureDetector(
+                                  onTap: () {
+                                    print('点击了section内容中的内容');
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.fromLTRB(16, 8, 10, 8),
+                                    child: Text(
+                                      e.title,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          color: Color(0xff333333),
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ))
+                            .toList(),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+        Container(
+          alignment: Alignment.center,
+          height: 36,
+          child: Container(
+            width: 60,
+            height: 8,
+            decoration: BoxDecoration(
+              color: Color(0xfff5f5f6),
+              borderRadius: BorderRadius.circular(4.0),
+            ),
+            child: ListView(
+              //该属性禁止用户滚动new ClampingScrollPhysics(),NeverScrollableScrollPhysics(),
+              // physics: NeverScrollableScrollPhysics(),
+              controller: _policiestagcontroller,
+              scrollDirection: Axis.horizontal,
+              //false，如果内容不足，则用户无法滚动 而如果[primary]为true，它们总是可以尝试滚动。
+              // primary: true,
+              children: [
+                SizedBox(
+                  width: 40,
+                ),
+                Container(
+                  width: 20,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    color: Color(0xff049875),
+                    borderRadius: BorderRadius.circular(4.0),
+                  ),
+                ),
+                SizedBox(
+                  width: 40,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  // 40-0
+  void _incrementCounter(
+    double offset,
+  ) {
+    double width = 910 - MediaQuery.of(context).size.width;
+    double needoffset = (1 - offset / width) * 40.0;
+    _policiestagcontroller.animateTo(needoffset,
+        duration: new Duration(microseconds: 1), curve: new ElasticOutCurve());
+  }
+
   //创建sectionTitle
   Widget buildSectionTitleRow(Function() moreaction, String titleStr) {
     return Container(
@@ -381,6 +589,17 @@ class _HomePage extends State<HomePage> {
         .then((res) {
       List datalist = res['data']['data'];
       arrOfPublicity = datalist.map((e) => HDhomehbmodel.fromJson(e)).toList();
+      this.mounted ? setState(() {}) : null;
+    }).catchError((error) {});
+  }
+
+  //请求政策法规数组（资料中心）
+  void getPolicieData() async {
+    var url = '${HTTPConfig.baseURL}/rule_app';
+    BCHttpRequest.request(url, method: 'get', isShowHub: true).then((res) {
+      List datalist = res['data'];
+      arrOfPolicie =
+          datalist.map((e) => BChomepoliciemodel.fromJson(e)).toList();
       this.mounted ? setState(() {}) : null;
     }).catchError((error) {});
   }
