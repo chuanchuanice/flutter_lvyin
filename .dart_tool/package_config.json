@@ -308,6 +308,12 @@
       "languageVersion": "2.7"
     },
     {
+      "name": "shared_preferences",
+      "rootUri": "file:///Users/chaos/Desktop/flutter/.pub-cache/hosted/pub.flutter-io.cn/shared_preferences-0.4.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
       "name": "shelf",
       "rootUri": "file:///Users/chaos/Desktop/flutter/.pub-cache/hosted/pub.flutter-io.cn/shelf-1.1.4",
       "packageUri": "lib/",
@@ -422,7 +428,7 @@
       "languageVersion": "2.7"
     }
   ],
-  "generated": "2021-05-28T02:34:05.396890Z",
+  "generated": "2021-06-01T10:03:29.185435Z",
   "generator": "pub",
   "generatorVersion": "2.12.3"
 }

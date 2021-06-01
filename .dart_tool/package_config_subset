@@ -194,6 +194,10 @@ pubspec_parse
 2.7
 file:///Users/chaos/Desktop/flutter/.pub-cache/hosted/pub.flutter-io.cn/pubspec_parse-0.1.8/
 file:///Users/chaos/Desktop/flutter/.pub-cache/hosted/pub.flutter-io.cn/pubspec_parse-0.1.8/lib/
+shared_preferences
+2.0
+file:///Users/chaos/Desktop/flutter/.pub-cache/hosted/pub.flutter-io.cn/shared_preferences-0.4.3/
+file:///Users/chaos/Desktop/flutter/.pub-cache/hosted/pub.flutter-io.cn/shared_preferences-0.4.3/lib/
 shelf
 2.12
 file:///Users/chaos/Desktop/flutter/.pub-cache/hosted/pub.flutter-io.cn/shelf-1.1.4/
@@ -276,6 +280,6 @@ file:///Users/chaos/Desktop/flutter/packages/flutter_test/
 file:///Users/chaos/Desktop/flutter/packages/flutter_test/lib/
 flutter_lvyindemo
 2.7
-file:///Users/chaos/Desktop/flutter_lvyindemo/flutter_lvyindemo/
-file:///Users/chaos/Desktop/flutter_lvyindemo/flutter_lvyindemo/lib/
+file:///Users/chaos/Desktop/flutter_lvyindemo/flutter_lvyin/
+file:///Users/chaos/Desktop/flutter_lvyindemo/flutter_lvyin/lib/
 2
