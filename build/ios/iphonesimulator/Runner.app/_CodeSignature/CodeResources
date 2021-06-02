@@ -110,7 +110,7 @@
 		</data>
 		<key>Frameworks/App.framework/App</key>
 		<data>
-		KnyTjIaUjS8t8AKC/fuf0Djm42A=
+		keNF+QRSvI30xVbf7jrOAyWy6UA=
 		</data>
 		<key>Frameworks/App.framework/Info.plist</key>
 		<data>
@@ -118,7 +118,7 @@
 		</data>
 		<key>Frameworks/App.framework/_CodeSignature/CodeResources</key>
 		<data>
-		xjFSrboHwe6cusnSMtFgD5pnk8M=
+		sa5RS5SrWkOJO/nap9lJU5t5Juc=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.json</key>
 		<data>
@@ -414,7 +414,7 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/kernel_blob.bin</key>
 		<data>
-		+gYWvoQOkuX5b2RNJtwytpyJwpo=
+		TNLwfhz4ROAAbpZA5R1/FZ/4zhY=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<data>
@@ -510,7 +510,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		x14S3bi6iHhNBlxdHGFo3W4BH3U=
+		Tm3CITLJGsY8KrVxObk+9EL6eCM=
 		</data>
 		<key>PkgInfo</key>
 		<data>
@@ -809,11 +809,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			KnyTjIaUjS8t8AKC/fuf0Djm42A=
+			keNF+QRSvI30xVbf7jrOAyWy6UA=
 			</data>
 			<key>hash2</key>
 			<data>
-			n3ZR/TNQE/LmIumB59aeCChklt2+q2qfIipKqST3P+w=
+			5pjeuOd4QAmwXTjv1IieqJRZcmypPidJtx/7yeNj83A=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/Info.plist</key>
@@ -831,11 +831,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			xjFSrboHwe6cusnSMtFgD5pnk8M=
+			sa5RS5SrWkOJO/nap9lJU5t5Juc=
 			</data>
 			<key>hash2</key>
 			<data>
-			eS4mxNZLCMCUhTKXSe3FCWMHs6qowVq/4VQ6AcQuaow=
+			Yk+2IhtX4FRuypko8DjpxOYZvPNxcPubKaPxe2rRL9o=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.json</key>
@@ -1645,11 +1645,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			+gYWvoQOkuX5b2RNJtwytpyJwpo=
+			TNLwfhz4ROAAbpZA5R1/FZ/4zhY=
 			</data>
 			<key>hash2</key>
 			<data>
-			EFn1FEOBSutaYbePm8aAGva4FCprLhSYmuewXN1O/E4=
+			m0nvxI8zJFCPPQZCB0LlEQq4EXa+wNPSBEg8lvtKPsA=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
