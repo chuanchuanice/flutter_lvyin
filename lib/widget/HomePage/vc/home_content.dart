@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_lvyindemo/vendor/BaseView/BCBaseAppBar.dart';
 import 'package:flutter_lvyindemo/vendor/WebHTTP/http_config.dart';
 import 'package:flutter_lvyindemo/vendor/WebHTTP/http_request.dart';
@@ -24,15 +25,12 @@ class _HomePage extends State<HomePage> {
   List<HDhomehbmodel> arrOfPublicity = [];
   List<BChomepoliciemodel> arrOfPolicie = [];
 
+  EasyRefreshController refreshcontroller = EasyRefreshController();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getBannerData();
-    getNewsData();
-    getHBData();
-    getPublicityData();
-    getPolicieData();
+    refreshHeader();
 
     _policcontentcontroller.addListener(() {
       //更新状态
@@ -42,32 +40,50 @@ class _HomePage extends State<HomePage> {
     });
   }
 
+  void refreshHeader() {
+    getBannerData();
+    getNewsData();
+    getHBData();
+    getPublicityData();
+    getPolicieData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: BCBaseAppBar()
           .mybarbuild(BCBaseAppBarType.BCBaseAppBarTypeHome, context),
       backgroundColor: Color(0xfff5f5f6),
-      body: ListView(
-        children: [
-          buildSwiper(),
-          SizedBox(
-            height: 10,
+      body: Container(
+        child: EasyRefresh(
+          enableControlFinishRefresh: true,
+          enableControlFinishLoad: false,
+          controller: refreshcontroller,
+          onRefresh: () async {
+            refreshHeader();
+          },
+          child: ListView(
+            children: [
+              buildSwiper(),
+              SizedBox(
+                height: 10,
+              ),
+              buildNewsTabe(),
+              SizedBox(
+                height: 10,
+              ),
+              buildHuanbaoTabel(),
+              SizedBox(
+                height: 10,
+              ),
+              buildPublicityTabel(),
+              SizedBox(
+                height: 10,
+              ),
+              buildPoliciesTabel(),
+            ],
           ),
-          buildNewsTabe(),
-          SizedBox(
-            height: 10,
-          ),
-          buildHuanbaoTabel(),
-          SizedBox(
-            height: 10,
-          ),
-          buildPublicityTabel(),
-          SizedBox(
-            height: 10,
-          ),
-          buildPoliciesTabel(),
-        ],
+        ),
       ),
     );
   }
@@ -548,9 +564,13 @@ class _HomePage extends State<HomePage> {
       arrOfbanner = datalist.map((e) => HDbrowsepicmodel.fromJson(e)).toList();
       if (this.mounted) {
         /** 判断一下内存是否泄露 再刷新build*/
-        setState(() {});
+        setState(() {
+          refreshcontroller.finishRefreshCallBack(success: true);
+        });
       }
-    }).catchError((error) {});
+    }).catchError((error) {
+      refreshcontroller.finishRefreshCallBack(success: true);
+    });
   }
 
   //请求新闻数据
@@ -561,8 +581,14 @@ class _HomePage extends State<HomePage> {
         .then((res) {
       List datalist = res['data']['data'];
       arrOfNews = datalist.map((e) => HDhomenewmodel.fromJson(e)).toList();
-      this.mounted ? setState(() {}) : null;
-    }).catchError((error) {});
+      this.mounted
+          ? setState(() {
+              refreshcontroller.finishRefreshCallBack(success: true);
+            })
+          : null;
+    }).catchError((error) {
+      refreshcontroller.finishRefreshCallBack(success: true);
+    });
   }
 
   //请求环保公示数据
@@ -575,8 +601,14 @@ class _HomePage extends State<HomePage> {
         .then((res) {
       List datalist = res['data']['data'];
       arrOfHB = datalist.map((e) => HDhomehbmodel.fromJson(e)).toList();
-      this.mounted ? setState(() {}) : null;
-    }).catchError((error) {});
+      this.mounted
+          ? setState(() {
+              refreshcontroller.finishRefreshCallBack(success: true);
+            })
+          : null;
+    }).catchError((error) {
+      refreshcontroller.finishRefreshCallBack(success: true);
+    });
   }
 
   //请求信息公示数据
@@ -589,8 +621,14 @@ class _HomePage extends State<HomePage> {
         .then((res) {
       List datalist = res['data']['data'];
       arrOfPublicity = datalist.map((e) => HDhomehbmodel.fromJson(e)).toList();
-      this.mounted ? setState(() {}) : null;
-    }).catchError((error) {});
+      this.mounted
+          ? setState(() {
+              refreshcontroller.finishRefreshCallBack(success: true);
+            })
+          : null;
+    }).catchError((error) {
+      refreshcontroller.finishRefreshCallBack(success: true);
+    });
   }
 
   //请求政策法规数组（资料中心）
@@ -600,7 +638,13 @@ class _HomePage extends State<HomePage> {
       List datalist = res['data'];
       arrOfPolicie =
           datalist.map((e) => BChomepoliciemodel.fromJson(e)).toList();
-      this.mounted ? setState(() {}) : null;
-    }).catchError((error) {});
+      this.mounted
+          ? setState(() {
+              refreshcontroller.finishRefreshCallBack(success: true);
+            })
+          : null;
+    }).catchError((error) {
+      refreshcontroller.finishRefreshCallBack(success: true);
+    });
   }
 }
