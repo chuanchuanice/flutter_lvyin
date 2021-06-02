@@ -112,54 +112,58 @@ class BCBaseAppBar {
       title: ValueListenableBuilder(
         builder: (context, value, child) {
           return bcbartype == BCBaseAppBarType.BCBaseAppBarTypeNomal
-            ? Text(titleStr)
-            : bcbartype == BCBaseAppBarType.BCBaseAppBarTypeHome
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Row(
-                        children: [
-                          GestureDetector(
-                            child: Container(
-                              child: Text(
-                                value['username'] == null ?'登录' : value['username'],
-                                style: TextStyle(fontSize: 20),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
+              ? Text(titleStr)
+              : bcbartype == BCBaseAppBarType.BCBaseAppBarTypeHome
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Row(
+                          children: [
+                            GestureDetector(
+                              child: Container(
+                                child: Text(
+                                  value.username == null
+                                      ? '登录'
+                                      : value.username,
+                                  style: TextStyle(fontSize: 20),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                width: 200,
                               ),
-                              width: 200,
+                              onTap: () {
+                                if (value.token != null) {
+                                } else {
+                                  Navigator.push(childcontext,
+                                      Bottom2TopRouter(child: BCLogin()));
+                                }
+                              },
                             ),
-                            onTap: () {
-                              Navigator.push(childcontext,
-                                  Bottom2TopRouter(child: BCLogin()));
-                            },
-                          ),
-                        ],
-                      ),
-                      // Expanded(child: Text(titleStr)),
-                    ],
-                  )
-                : Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        child: Text(
-                          value['username'] == null ?'' : value['username'],
-                          style: TextStyle(fontSize: 20),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+                          ],
                         ),
-                        width: 250,
-                      ),
-                    ],
-                  );
+                        // Expanded(child: Text(titleStr)),
+                      ],
+                    )
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          child: Text(
+                            value.username == null ? '' : value.username,
+                            style: TextStyle(fontSize: 20),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          width: 250,
+                        ),
+                      ],
+                    );
         },
 
         ///监听的数据
         valueListenable: UserNotifierSingleton.instance.bcuserNotifier,
-
       ),
       actions: bcbartype == BCBaseAppBarType.BCBaseAppBarTypeNomal
           ? [

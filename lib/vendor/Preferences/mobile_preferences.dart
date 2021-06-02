@@ -4,6 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MobilePreferences {
+  String token;
+  String usertype;
+  String username;
+
+  MobilePreferences bcbuild() {
+    MobilePreferences myclassmodel = MobilePreferences();
+    myclassmodel.getToken().then((value) => {myclassmodel.token = value});
+    myclassmodel.getUserName().then((value) => {myclassmodel.username = value});
+    myclassmodel.getUserType().then((value) => {myclassmodel.usertype = value});
+
+    return myclassmodel;
+  }
+  // MobilePreferences(this.token, this.usertype, this.username);
+
   setToken(String token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('token', token);
@@ -43,7 +57,6 @@ class MobilePreferences {
     var token;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString('usertype');
-
     return token;
   }
 
@@ -93,20 +106,16 @@ class UserNotifierSingleton {
     return _instance;
   }
 
-  UserNotifier bcuserNotifier = UserNotifier({
-    'token': MobilePreferences().getToken(),
-    'usertype': MobilePreferences().getUserType(),
-    'username': MobilePreferences().getUserName()
-  });
+  UserNotifier bcuserNotifier = UserNotifier(MobilePreferences().bcbuild());
 }
 
 //dic 的格式为{'token':token,'usertype':usertype,'username':username}
 class UserNotifier extends ValueNotifier {
-  UserNotifier(var dic) : super(dic);
+  UserNotifier(MobilePreferences dic) : super(dic);
 
   void setToken(String token) {
     ///赋值
-    value['token'] = token;
+    value.token = token;
 
     ///通知更新
     notifyListeners();
@@ -114,7 +123,7 @@ class UserNotifier extends ValueNotifier {
 
   void setUserType(String usertype) {
     ///赋值
-    value['usertype'] = usertype;
+    value.usertype = usertype;
 
     ///通知更新
     notifyListeners();
@@ -122,7 +131,7 @@ class UserNotifier extends ValueNotifier {
 
   void setUserName(String username) {
     ///赋值
-    value['username'] = username;
+    value.username = username;
 
     ///通知更新
     notifyListeners();
